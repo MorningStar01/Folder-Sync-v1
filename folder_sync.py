@@ -10,7 +10,6 @@ from pathlib import Path
 # Function to get all files in the given folder
 def get_all_files(folder_path):
     all_files = set()
-    # using "_" will ignore the list of directory names
     for root, _, file_list in os.walk(folder_path):
         for file in file_list:
             full_file_path = os.path.join(root, file)
