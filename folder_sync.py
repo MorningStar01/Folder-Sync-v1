@@ -19,8 +19,6 @@ def get_all_files(folder_path):
     
     return all_files
 
-# print(get_all_files("C:\\Users\\danpo\\Desktop\\Veeam\\SSSS"))
-
 # Function to calculate the MD5 hash of a file
 def md5(file_path):
     hash_md5 = hashlib.md5()
