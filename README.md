@@ -13,6 +13,8 @@ git clone https://github.com/MorningStar01/folder-sync.git
 
 2. Change directory to the `folder-sync` folder
 
+3. Open Command Prompt in the `folder-sync` folder
+
 ## Usage
 
 To run the script, use the following command:
