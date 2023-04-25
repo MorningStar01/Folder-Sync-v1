@@ -43,25 +43,34 @@ def sync_folders(source, replica):
         # If the file is not in the replica folder, create it
         if file not in replica_files:
             os.makedirs(replica_file.parent, exist_ok=True)
-            shutil.copy(source_file, replica_file)
-            source_file_hash = md5(source_file)
-            logging.info(f"Created: {replica_file} (MD5: {source_file_hash})")
+            try:
+                shutil.copy(source_file, replica_file)
+                source_file_hash = md5(source_file)
+                logging.info(f"Created: {replica_file} (MD5: {source_file_hash})")
+            except Exception as e:
+                logging.error(f"Error creating {replica_file}: {e}")
 
         # If the file is in the replica folder but has a different MD5 hash, update it
         else:
             source_file_hash = md5(source_file)
             replica_file_hash = md5(replica_file)
             if source_file_hash != replica_file_hash:
-                shutil.copy(source_file, replica_file)
-                logging.info(f"Updated: {replica_file} (Old MD5: {replica_file_hash}, New MD5: {source_file_hash})")
+                try:
+                    shutil.copy(source_file, replica_file)
+                    logging.info(f"Updated: {replica_file} (Old MD5: {replica_file_hash}, New MD5: {source_file_hash})")
+                except Exception as e:
+                    logging.error(f"Error updating {replica_file}: {e}")
 
     # Iterate through replica files and remove files that are not in the source folder
     for file in replica_files:
         if file not in source_files:
             replica_file = replica / file
             replica_file_hash = md5(replica_file)
-            os.remove(replica_file)
-            logging.info(f"Removed: {replica_file} (MD5: {replica_file_hash})")
+            try:
+                os.remove(replica_file)
+                logging.info(f"Removed: {replica_file} (MD5: {replica_file_hash})")
+            except Exception as e:
+                logging.error(f"Error removing {replica_file}: {e}")
 
 def main():
     # Parse command line arguments
